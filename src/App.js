@@ -6,6 +6,7 @@ import {
   getDocs,
   addDoc,
   updateDoc,
+  deleteDoc,
   doc,
 } from "firebase/firestore";
 
@@ -24,6 +25,11 @@ function App() {
     // burada usersCollectionRef yerine userDoc adında yeni bir degişken oluşturdum çünkü usercollectionRef bütün collection kümelerini kapsıyor ama benim ulaşmak istediğim id ler users collection ın içindekiler.
     const newFields = { age: age + 1 };
     await updateDoc(userDoc, newFields);
+  };
+
+  const deleteUser = async (id) => {
+    const userDoc = doc(db, "users", id);
+    await deleteDoc(userDoc);
   };
 
   useEffect(() => {
@@ -62,6 +68,13 @@ function App() {
               }}
             >
               Increase Age
+            </button>
+            <button
+              onClick={() => {
+                deleteUser(user.id);
+              }}
+            >
+              Delete User
             </button>
           </div>
         );
